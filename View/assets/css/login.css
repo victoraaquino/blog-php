@@ -1,0 +1,19 @@
+/* css da pagina de login (index.html) */
+
+body{
+    position: relative;
+}
+
+.container_login {
+    position: absolute;
+    width: 40vw;
+    min-height: 50vh;
+    height: auto;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 16vh;
+    border: 1px solid #000;
+}
