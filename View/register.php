@@ -1,6 +1,6 @@
 <?php
 
-require "./../Controller/AuthorController.php";
+require_once "./../Controller/AuthorController.php";
 
 if (isset($_POST["btn_cadastro"])) {
 
