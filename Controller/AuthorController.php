@@ -1,7 +1,7 @@
 <?php
 
-require "./../Model/Author.php";
-require "./../Dao/AuthorDAO.php";
+require_once "./../Model/Author.php";
+require_once "./../Dao/AuthorDAO.php";
 
 class AuthorControler
 {
@@ -39,5 +39,19 @@ class AuthorControler
         } else {
             header("Location: register.php?error=true");
         }
+    }
+
+    public static function getOne($id){
+        $author = new Author();
+        $author->setId($id);
+
+        $dao = new AuthorDAO($author);
+        $res = $dao->getOne();
+
+        $author->setName($res['name']);
+        $author->setEmail($res['email']);
+        $author->setPassword($res['password']);
+
+        return $author;
     }
 }

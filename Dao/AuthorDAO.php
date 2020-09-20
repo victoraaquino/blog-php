@@ -1,6 +1,7 @@
 <?php
 
-require "./../Database/Connection.php";
+require_once "./../Model/Author.php";
+require_once "./../Database/Connection.php";
 
 class AuthorDAO
 {
@@ -8,20 +9,10 @@ class AuthorDAO
     private $author;
     private $conn;
 
-    public function __construct($author)
+    public function __construct(Author $author)
     {
         $this->author = $author;
         $this->conn = Connection::getConnection();
-    }
-
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-    }
-
-    public function getAuthor()
-    {
-        return $this->author;
     }
 
     public function login()
@@ -33,7 +24,7 @@ class AuthorDAO
 
         $stmt->execute();
 
-        $res = $stmt->fetchAll();
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 
         return $res;
     }
@@ -49,6 +40,18 @@ class AuthorDAO
         $res = $stmt->execute();
 
         return $res;
+    }
 
+    public function getOne()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM author WHERE id=:id");
+
+        $stmt->bindValue(":id", $this->author->getId());
+
+        $stmt->execute();
+
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+
+        return $res;
     }
 }
