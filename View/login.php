@@ -1,10 +1,9 @@
 <?php
 session_start();
 
-
 if (isset($_POST["btn_login"])) {
 
-  require "./../Controller/AuthorController.php";
+  require_once "./../Controller/AuthorController.php";
 
   $res = AuthorControler::login([
     "email" => $_POST["email"],
@@ -18,7 +17,7 @@ if (isset($_POST["btn_login"])) {
     ";
 }
 
-if(isset($_GET["redirect"])){
+if (isset($_GET["redirect"])) {
   $redirect = $_GET["redirect"];
   header("Location: $redirect.php");
 }
@@ -37,7 +36,7 @@ if(isset($_GET["redirect"])){
 </head>
 
 <body>
-
+  <a href="?redirect=index">Ir para a pagina principal</a>
   <div class='card container_login'>
 
     <div class='card-body p-5'>
