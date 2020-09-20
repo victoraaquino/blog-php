@@ -1,5 +1,8 @@
 <?php
 
+require_once "./../Controller/PostController.php";
+
+$post = PostController::getAll();
 
 if (isset($_GET["redirect"])) {
     $redirect = $_GET["redirect"];
@@ -9,7 +12,7 @@ if (isset($_GET["redirect"])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -19,6 +22,15 @@ if (isset($_GET["redirect"])) {
 
 <body>
     <a href="?redirect=login">Fazer Login</a>
+    <!-- Listagem dos Posts -->
+    <?php
+        foreach ($posts as $i => $post) {
+    ?>
+        <h1><?php echo $post['title'] ?></h1>
+        <p><?php echo$post['text'] ?></p>
+    <?php
+        }
+    ?>
 </body>
 
 </html>

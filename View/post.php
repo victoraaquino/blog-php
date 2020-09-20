@@ -1,10 +1,13 @@
 <?php
+session_start();
+
 if (isset($_POST["btn_cadastrar"])) {
-  require "./../Controller/PostController.php";
+  require_once "./../Controller/PostController.php";
 
   PostController::insert([
     'title' => $_POST['title'],
-    'text' => $_POST['text']
+    'text' => $_POST['text'],
+    'author_id' => $_SESSION['user']['id']
   ]);
 }
 
@@ -32,20 +35,21 @@ if (isset($_POST["btn_cadastrar"])) {
 
 <body>
 
-  <form method="post" action="post.php"></form>
-  <div class="row mr-auto ml-auto pt-3" style="width: 50vw">
-    <div class="col-md-12 mb-3">
-      <input type="text" class="form-control" name="title" placeholder="Titulo da publicação">
+  <form method="post" action="post.php">
+    <div class="row mr-auto ml-auto pt-3" style="width: 50vw">
+      <div class="col-md-12 mb-3">
+        <input type="text" class="form-control" name="title" placeholder="Titulo da publicação">
+      </div>
+      <div class="col-md-12 mb-3">
+        <textarea id="summernote" name="text"></textarea>
+      </div>
+      <div class="col-md-12 mb-3">
+        <button type="submit" class="btn btn-primary btn-block" name="btn_cadastrar">
+          Cadastrar
+        </button>
+      </div>
     </div>
-    <div class="col-md-12 mb-3">
-      <textarea id="summernote" name="text"></textarea>
-    </div>
-    <div class="col-md-12 mb-3">
-      <button type="submit" class="btn btn-primary btn-block" name="btn_cadastrar">
-        Cadastrar
-      </button>
-    </div>
-  </div>
+  </form>
 
   <script>
     $(document).ready(function() {
@@ -55,6 +59,15 @@ if (isset($_POST["btn_cadastrar"])) {
       });
     });
   </script>
+  <?php
+    if (isset($_GET["error"])) {
+        echo "
+        <script>
+          alert('Ocorreu um erro no cadastro do Post');
+        </script>
+      ";
+    }
+    ?>
 
 </body>
 
