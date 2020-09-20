@@ -2,7 +2,7 @@
 
 require_once "./../Controller/PostController.php";
 
-$post = PostController::getAll();
+$posts = PostController::getAll();
 
 if (isset($_GET["redirect"])) {
     $redirect = $_GET["redirect"];
@@ -24,12 +24,16 @@ if (isset($_GET["redirect"])) {
     <a href="?redirect=login">Fazer Login</a>
     <!-- Listagem dos Posts -->
     <?php
-        foreach ($posts as $i => $post) {
+    foreach ($posts as $i => $post) {
     ?>
-        <h1><?php echo $post['title'] ?></h1>
-        <p><?php echo$post['text'] ?></p>
+        <div>
+            <h1><?php echo $post->getTitle() ?></h1>
+            <h2>Autor: <?php echo $post->getAuthor()->getName() ?></h2>
+            <h3>Última modificação: <?php echo date('d/m/Y H:i', strtotime($post->getTime())) ?> </h3>
+            <p><?php echo $post->getText() ?></p>
+        </div>
     <?php
-        }
+    }
     ?>
 </body>
 
