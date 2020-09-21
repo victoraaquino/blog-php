@@ -2,6 +2,7 @@
 session_start();
 require_once "./../Controller/PostController.php";
 require_once "./../Controller/TagController.php";
+require_once "./../Controller/PostTagController.php";
 
 $id = '';
 $title = '';
@@ -9,12 +10,15 @@ $text = '';
 $btnValue = 'Cadastrar';
 $btnName = 'btn_insert';
 $tags = TagController::getAll();
+$postTags = [];
 
 if (isset($_GET['id'])) {
   $post = PostController::getOne($_GET['id']);
   $id = $post->getId();
   $title = $post->getTitle();
   $text = $post->getText();
+
+  $postTags = $post->getTags();
 
   $btnValue = 'Editar';
   $btnName = 'btn_update';
@@ -83,7 +87,15 @@ if (isset($_GET["redirect"])) {
       <div class="col-md-12 mb-3" style="padding: 0px">
         <div class="row">
           <div class="col-md-6">
-            <div class="show_tags" id="show_tags"></div>
+            <div class="show_tags" id="show_tags">
+              <?php
+              foreach ($postTags as $i => $tag) {
+              ?>
+                 <span class="tag"><?php echo $tag->getName() ?></span>
+              <?php
+              }
+              ?>
+            </div>
             <div class="hidden" id="container_tags"></div>
           </div>
           <div class="col-md-6">
@@ -110,10 +122,11 @@ if (isset($_GET["redirect"])) {
   </form>
 
   <script>
-    const tags = [];
+    
 
     function handleAddTag() {
 
+      const tags = document.querySelectorAll('.tag_hidden');
       let textOption = $("#tag option:selected").text();
       let tagId = $('#tag').val();
 
@@ -121,22 +134,22 @@ if (isset($_GET["redirect"])) {
         return;
       }
 
-      const isExists = tags.map(tag => {
-        if (tag == tagId) {
-          return true;
+      let isExists = false;
+
+      tags.forEach(tag => {
+        if (tag.value == tagId) {
+          isExists = true;
         }
       })
 
-      if(isExists.length > 0){
+      if (isExists) {
         alert("Tag já adicionada!");
         return;
       }
 
-      tags.push(tagId);
-
       //adicionando as tags
       $('#container_tags').append(`
-        <input type="hidden" name="tags[]" value="${tagId}" />
+        <input type="hidden" name="tags[]" value="${tagId}" class="tag_hidden"/>
       `);
 
       //colocando as tags no container

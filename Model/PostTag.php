@@ -1,7 +1,7 @@
 <?php
 
-require_once "./Post.php";
-require_once "./Tag.php";
+require_once "Post.php";
+require_once "Tag.php";
 
 class PostTag
 {
@@ -12,7 +12,7 @@ class PostTag
 
     public function setId($id)
     {
-        $this->$id = $id;
+        $this->id = $id;
     }
 
     public function getId()
@@ -22,7 +22,7 @@ class PostTag
 
     public function setPost(Post $post)
     {
-        $this->$post = $post;
+        $this->post = $post;
     }
 
     public function getPost()
@@ -32,7 +32,7 @@ class PostTag
 
     public function setTag(Tag $tag)
     {
-        $this->$tag = $tag;
+        $this->tag = $tag;
     }
 
     public function getTag()

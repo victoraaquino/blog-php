@@ -2,8 +2,8 @@
 
 require_once "./../Model/Post.php";
 require_once "./../Dao/PostDAO.php";
-require_once "./AuthorController.php";
-require_once "./PostTagController.php";
+require_once "AuthorController.php";
+require_once "PostTagController.php";
 class PostController
 {
 
@@ -22,6 +22,7 @@ class PostController
             $newPost->setText($postRes['text']);
             $newPost->setTime($postRes['time']);
             $newPost->setAuthor(AuthorControler::getOne($postRes['author_id']));
+            $newPost->setTags(PostTagController::getAllByPost( $newPost->getId()));
 
             $posts[] = $newPost;
         }
@@ -50,6 +51,7 @@ class PostController
             $newPost->setText($postRes['text']);
             $newPost->setTime($postRes['time']);
             $newPost->setAuthor(AuthorControler::getOne($postRes['author_id']));
+            $newPost->setTags(PostTagController::getAllByPost( $newPost->getId()));
 
             $posts[] = $newPost;
         }
@@ -73,6 +75,7 @@ class PostController
         $newPost->setText($res['text']);
         $newPost->setTime($res['time']);
         $newPost->setAuthor(AuthorControler::getOne($res['author_id']));
+        $newPost->setTags(PostTagController::getAllByPost( $newPost->getId()));
 
         return $newPost;
     }
@@ -117,6 +120,11 @@ class PostController
         $dao->setPost($post);
         $res = $dao->update();
 
+        PostTagController::insert([
+            'post_id' => $post->getId(),
+            'tags'=> $data['tags']
+        ]);
+
         if ($res) {
             header("Location: home.php");
         } else {
@@ -128,6 +136,8 @@ class PostController
     {
         $post = new Post();
         $post->setId($postId);
+
+        PostTagController::removeByPost($post->getId());
 
         $dao = new PostDAO();
         $dao->setPost($post);

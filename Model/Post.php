@@ -7,6 +7,7 @@ class Post
     private $author;
     private $text;
     private $time;
+    private $tags;
 
     public function setId($id)
     {
@@ -57,4 +58,14 @@ class Post
     {
         return $this->time;
     }
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
 }
