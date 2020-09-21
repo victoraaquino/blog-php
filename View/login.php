@@ -36,7 +36,9 @@ if (isset($_GET["redirect"])) {
 </head>
 
 <body>
-  <a href="?redirect=index">Ir para a pagina principal</a>
+  <div class="menu">
+    <a href="?redirect=index">Ir para a pagina principal</a>
+  </div>
   <div class='card container_login'>
 
     <div class='card-body p-5'>

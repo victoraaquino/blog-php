@@ -54,7 +54,7 @@ if (isset($_GET["redirect"])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' integrity='sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z' crossorigin='anonymous'>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="./assets/css/post.css">
 
@@ -67,31 +67,33 @@ if (isset($_GET["redirect"])) {
 
   <!-- summernote -->
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
   <title>Blog | Cadastrar Post</title>
 </head>
 
 <body>
-
-  <a href="?redirect=home">Voltar</a>
+  <div class="menu">
+    <a href="?redirect=home">Voltar</a>
+  </div>
 
   <form method="post" action="post.php">
     <input type="hidden" name="id" value="<?php echo $id ?>" />
-    <div class="row mr-auto ml-auto pt-3" style="width: 50vw">
-      <div class="col-md-12 mb-3">
-        <input type="text" class="form-control" name="title" placeholder="Titulo da publicação" value="<?php echo $title ?>">
+    <div class="row pt-3" style="width: 50vw;margin-left:auto;margin-right:auto">
+      <div class="col-md-12" style="margin-bottom: 20px">
+        <input type="text" class="form-control required" name="title" placeholder="Titulo da publicação" value="<?php echo $title ?>" onkeypress="verifyField()">
       </div>
-      <div class="col-md-12 mb-3">
+      <div class="col-md-12">
         <textarea id="summernote" name="text"><?php echo $text ?></textarea>
       </div>
-      <div class="col-md-12 mb-3" style="padding: 0px">
+      <div class="col-md-12" style="padding: 0px;margin-bottom: 20px">
         <div class="row">
           <div class="col-md-6">
             <div class="show_tags" id="show_tags">
               <?php
               foreach ($postTags as $i => $tag) {
               ?>
-                 <span class="tag"><?php echo $tag->getName() ?></span>
+                <span class="tag"><?php echo $tag->getName() ?></span>
               <?php
               }
               ?>
@@ -99,7 +101,7 @@ if (isset($_GET["redirect"])) {
             <div class="hidden" id="container_tags"></div>
           </div>
           <div class="col-md-6">
-            <select class="form-control mb-3" id="tag">
+            <select class="form-control" id="tag" style="margin-bottom: 20px">
               <option value="">Selecione</option>
               <?php
               foreach ($tags as $i => $tag) {
@@ -113,8 +115,8 @@ if (isset($_GET["redirect"])) {
           </div>
         </div>
       </div>
-      <div class="col-md-12 mb-3">
-        <button type="submit" class="btn btn-primary btn-block" name="<?php echo $btnName ?>">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary btn-block" name="<?php echo $btnName ?>" id="btn">
           <?php echo $btnValue ?>
         </button>
       </div>
@@ -122,8 +124,6 @@ if (isset($_GET["redirect"])) {
   </form>
 
   <script>
-    
-
     function handleAddTag() {
 
       const tags = document.querySelectorAll('.tag_hidden');
@@ -164,10 +164,12 @@ if (isset($_GET["redirect"])) {
     $(document).ready(function() {
       $('#summernote').summernote({
         placeholder: 'Corpo da publicação',
-        height: 400
+        height: 400,
+        lang: 'pt-BR'
       });
     });
   </script>
+
   <?php
   if (isset($_GET["error"])) {
     echo "
@@ -177,7 +179,27 @@ if (isset($_GET["redirect"])) {
       ";
   }
   ?>
+  <script>
+    $('#btn').attr('disabled', 'disabled');
+    function verifyField() {
+      let isEmpty = '';
 
+      document.querySelectorAll('.required').forEach(e => {
+        if (e.value == '') {
+          e.style.border = "1px solid red";
+          isEmpty = true
+        } else {
+          e.style.border = "1px solid green";
+        }
+      });
+
+      if (isEmpty) {
+        $('#btn').attr('disabled', 'disabled');
+      } else {
+        $('#btn').removeAttr('disabled');
+      }
+    }
+  </script>
 </body>
 
 </html>

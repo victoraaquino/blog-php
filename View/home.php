@@ -29,28 +29,35 @@ if (isset($_GET["logout"])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' href='./assets/css/home.css' type='text/css'>
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' integrity='sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z' crossorigin='anonymous'>
   <title>Blog | Dashboard</title>
 </head>
 
 <body>
-  <a href="?redirect=post">Cadastrar posts</a>
-  <a href="?logout=true">Sair</a>
+  <div class="menu">
+    <a href="?redirect=post">Cadastrar posts</a>
+    <a href="?logout=true">Sair</a>
+  </div>
+
   <!-- Listagem dos posts cadastrados pelo usuario -->
   <?php
   foreach ($posts as $i => $post) {
   ?>
-    <div>
-      <a href="?redirect=post&id=<?php echo $post->getId() ?>">Editar</a>
-      <a onclick="deletePost(<?php echo $post->getId() ?>)">Excluir</a>
-      <h1><?php echo $post->getTitle() ?></h1>
-      <p><?php echo $post->getText() ?></p>
-      <p>Tags:
-        <?php
-        foreach ($post->getTags() as $i => $tag) {
-          echo $tag->getName() . " ";
-        }
-        ?>
-      </p>
+    <div class="card">
+      <div class="card-body"style="height: 300px;">
+        <a href="?redirect=post&id=<?php echo $post->getId() ?>">Editar</a>
+        <a href="" onclick="deletePost(<?php echo $post->getId() ?>)">Excluir</a>
+        <h1><?php echo $post->getTitle() ?></h1>
+        <div style="height: 120px;overflow:auto"><?php echo $post->getText() ?></div>
+        <p>Tags:
+          <?php
+          foreach ($post->getTags() as $i => $tag) {
+            echo "<span class='tag' >".$tag->getName()."</span>";
+          }
+          ?>
+        </p>
+      </div>
     </div>
 
   <?php

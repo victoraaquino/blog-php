@@ -1,7 +1,25 @@
-/* css dos posts */
-
+/* CSS da pagina inicial */
 *{
+    padding: 0;
     margin: 0;
+}
+
+header {
+    width: 100%;
+    height: 250px;
+    background-image: url("./../image/bg_header.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.title {
+    position: absolute;
+    color: #fff;
+    bottom: 0px;
+    right: 0px;
+    font-size: 70px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .menu {
@@ -11,7 +29,7 @@
     display: flex;
     align-items: center;
     align-content: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 0px 10px 0px 10px;
     box-sizing: border-box;
 }
@@ -23,15 +41,9 @@
     font-size: 20px;
 }
 
-.show_tags {
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    width: 100%;
-    height: 200px;
-    padding: 10px;
-}
-
 .tag {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 25px;
     padding: 0px 5px 0px 5px;
+    margin-right: 5px;
 }
