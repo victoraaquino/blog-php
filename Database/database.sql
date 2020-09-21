@@ -23,10 +23,17 @@ CREATE TABLE tag (
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE post_tags (
+CREATE TABLE post_tag (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     post_id INT NOT NULL,
     tag_id INT NOT NULL,
     FOREIGN KEY (post_id) REFERENCES post(id),
     FOREIGN KEY (tag_id) REFERENCES tag(id)
 );
+
+-- Tags pré existentes
+INSERT INTO tag (name) VALUES ("Games");
+INSERT INTO tag (name) VALUES ("Animes");
+INSERT INTO tag (name) VALUES ("Heróis");
+INSERT INTO tag (name) VALUES ("Mangá");
+INSERT INTO tag (name) VALUES ("HQ");
