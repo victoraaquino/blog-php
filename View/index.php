@@ -31,6 +31,13 @@ if (isset($_GET["redirect"])) {
             <h2>Autor: <?php echo $post->getAuthor()->getName() ?></h2>
             <h3>Última modificação: <?php echo date('d/m/Y H:i', strtotime($post->getTime())) ?> </h3>
             <p><?php echo $post->getText() ?></p>
+            <p>Tags:
+                <?php
+                foreach ($post->getTags() as $i => $tag) {
+                    echo $tag->getName()." ";
+                }
+                ?>
+            </p>
         </div>
     <?php
     }

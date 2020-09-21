@@ -44,6 +44,13 @@ if (isset($_GET["logout"])) {
       <a onclick="deletePost(<?php echo $post->getId() ?>)">Excluir</a>
       <h1><?php echo $post->getTitle() ?></h1>
       <p><?php echo $post->getText() ?></p>
+      <p>Tags:
+        <?php
+        foreach ($post->getTags() as $i => $tag) {
+          echo $tag->getName() . " ";
+        }
+        ?>
+      </p>
     </div>
 
   <?php
@@ -56,7 +63,6 @@ if (isset($_GET["logout"])) {
       if ($confirm) {
         window.location.href = window.location.href + `?delete=${postId}`;
       }
-
     }
   </script>
 
