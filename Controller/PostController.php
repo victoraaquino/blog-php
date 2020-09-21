@@ -2,7 +2,8 @@
 
 require_once "./../Model/Post.php";
 require_once "./../Dao/PostDAO.php";
-require_once "./../Controller/AuthorController.php";
+require_once "./AuthorController.php";
+require_once "./PostTagController.php";
 class PostController
 {
 
@@ -78,6 +79,7 @@ class PostController
 
     public static function insert($data)
     {
+
         $post = new Post();
         $post->setTitle($data["title"]);
         $post->setText($data["text"]);
@@ -87,9 +89,16 @@ class PostController
 
         $dao = new PostDAO();
         $dao->setPost($post);
-        $res = $dao->insert();
+        $res = $dao->insert(); //retorna o id inserido
 
-        if ($res) {
+        $post->setId($res);
+
+        PostTagController::insert([
+            'post_id' => $post->getId(),
+            'tags' => $data['tags']
+        ]);
+
+        if ($res > 0) {
             header("Location: home.php");
         } else {
             header("Location: post.php?erro=true");
