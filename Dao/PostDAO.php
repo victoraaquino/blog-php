@@ -74,7 +74,9 @@ class PostDAO
         $stmt->bindValue(":text", $this->post->getText());
         $stmt->bindValue(":time", $this->post->getTime());
 
-        $res = $stmt->execute();
+        $stmt->execute();
+
+        $res = $this->conn->lastInsertId();
 
         return $res;
     }
