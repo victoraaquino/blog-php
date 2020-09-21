@@ -34,4 +34,18 @@ class TagDAO
 
         return $res;
     }
+
+    public function getOne()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM tag WHERE id=:id");
+
+        $stmt->bindValue(":id", $this->tag->getId());
+
+        $stmt->execute();
+
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+
+        return $res;
+    }
+
 }
